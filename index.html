@@ -39,7 +39,7 @@ const KEY='babyCourseManagerV1';let data=load(),month=new Date();function load()
 function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function money(n){return '¥'+Number(n||0).toLocaleString('zh-CN',{maximumFractionDigits:2})}
 function courseName(id){return data.courses.find(c=>c.id===id)?.name||'已删除课程'}
-function completed(id){return data.lessons.filter(x=>x.courseId===id&&x.status==='已完成').length}
+function completed(id){return data.lessons.filter(x=>x.courseId===id&&['已完成','请假'].includes(x.status)).length}
 function paid(id){return data.payments.filter(x=>x.courseId===id).reduce((s,x)=>s+Number(x.amount||0),0)}
 function tab(id,el){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));(el||document.querySelector(`[data-tab="${id}"]`)).classList.add('active');render()}
 function openModal(title,body,fn){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=body;document.getElementById('modalSave').onclick=fn;document.getElementById('modal').classList.add('show')}
